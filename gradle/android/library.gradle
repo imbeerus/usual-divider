@@ -1,0 +1,13 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/android/base.gradle')
+
+android {
+    defaultConfig {
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}

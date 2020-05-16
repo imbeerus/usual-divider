@@ -1,0 +1,11 @@
+apply from: rootProject.file('gradle/android/app.gradle')
+apply from: rootProject.file('gradle/deps.gradle')
+
+dependencies {
+    implementation(
+            deps.kotlin.stdlib,
+            deps.android.appcompat
+    )
+
+    implementation project(':divider-library')
+}

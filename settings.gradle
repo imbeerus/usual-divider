@@ -1,0 +1,2 @@
+rootProject.name = 'usual-divider'
+include ':app', ':divider-library'
