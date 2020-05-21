@@ -1,9 +1,12 @@
 package com.lockwood.divider
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import com.lockwood.divider.extensions.fetchAndroidAttrs
 import com.lockwood.divider.extensions.fetchAttrs
 import com.lockwood.divider.extensions.updateView
 
@@ -27,15 +30,29 @@ class DividerView @JvmOverloads constructor(
             updateView()
         }
 
+    var dividerColor = DEFAULT_COLOR
+        set(value) {
+            field = value
+            updateDividerView()
+        }
+
     private val defaultSize
         get() = resources.getDimensionPixelSize(R.dimen.default_divider_size)
 
     init {
-        fetchAttrs(context, R.styleable.DividerView, attrs) {
-            dividerOrientation = getInt(R.styleable.DividerView_dividerOrientation, DEFAULT_ORIENTATION)
+        fetchAndroidAttrs(context, android.R.attr.background, set = attrs) {
+            dividerColor = try {
+                getColor(0, DEFAULT_COLOR)
+            } catch (e: Resources.NotFoundException) {
+                Log.e(TAG, "You should use valid color background resource for divider")
+                DEFAULT_COLOR
+            }
         }
 
-        setBackgroundColor(DEFAULT_COLOR)
+        fetchAttrs(context, R.styleable.DividerView, set = attrs) {
+            dividerOrientation =
+                getInt(R.styleable.DividerView_dividerOrientation, DEFAULT_ORIENTATION)
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -43,6 +60,11 @@ class DividerView @JvmOverloads constructor(
         val measuredHeight = measureHeightDimension(heightMeasureSpec)
 
         setMeasuredDimension(measuredWidth, measuredHeight)
+    }
+
+    private fun updateDividerView() {
+        setBackgroundColor(dividerColor)
+        updateView()
     }
 
     private fun measureWidthDimension(widthMeasureSpec: Int): Int {
