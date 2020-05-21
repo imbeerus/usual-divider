@@ -7,7 +7,7 @@ import android.view.View
 import com.lockwood.divider.extensions.fetchAttrs
 import com.lockwood.divider.extensions.updateView
 
-class Divider @JvmOverloads constructor(
+class DividerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -15,7 +15,7 @@ class Divider @JvmOverloads constructor(
 
     companion object {
 
-        private val TAG = Divider::class.java.simpleName
+        private val TAG = DividerView::class.java.simpleName
 
         private const val DEFAULT_ORIENTATION = Orientation.HORIZONTAL
         private const val DEFAULT_COLOR = Color.DKGRAY
@@ -31,8 +31,8 @@ class Divider @JvmOverloads constructor(
         get() = resources.getDimensionPixelSize(R.dimen.default_divider_size)
 
     init {
-        fetchAttrs(context, R.styleable.Divider, attrs) {
-            dividerOrientation = getInt(R.styleable.Divider_dividerOrientation, DEFAULT_ORIENTATION)
+        fetchAttrs(context, R.styleable.DividerView, attrs) {
+            dividerOrientation = getInt(R.styleable.DividerView_dividerOrientation, DEFAULT_ORIENTATION)
         }
 
         setBackgroundColor(DEFAULT_COLOR)
