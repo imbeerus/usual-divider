@@ -7,6 +7,8 @@
 
 Simplest divider for placing between views
 
+<img src="https://github.com/lndmflngs/usual-divider/blob/master/screenshot/1.png?raw=true" width="25%" />
+
 ## Download
 Download the [latest release][1] or grab via Gradle:
 
