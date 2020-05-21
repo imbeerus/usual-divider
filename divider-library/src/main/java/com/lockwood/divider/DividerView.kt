@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import com.lockwood.divider.extensions.dpToPx
 import com.lockwood.divider.extensions.fetchAndroidAttrs
 import com.lockwood.divider.extensions.fetchAttrs
 import com.lockwood.divider.extensions.updateView
@@ -22,36 +23,60 @@ class DividerView @JvmOverloads constructor(
 
         private const val DEFAULT_ORIENTATION = Orientation.HORIZONTAL
         private const val DEFAULT_COLOR = Color.DKGRAY
+        private const val DEFAULT_DIVIDER_SIZE_DP = 1
     }
 
-    var dividerOrientation = DEFAULT_ORIENTATION
+    //region Divider Vars
+    var dividerOrientation: Int = DEFAULT_ORIENTATION
         set(value) {
             field = value
             updateView()
         }
 
-    var dividerColor = DEFAULT_COLOR
+    var dividerColor: Int = DEFAULT_COLOR
         set(value) {
             field = value
             updateDividerView()
         }
 
-    private val defaultSize
-        get() = resources.getDimensionPixelSize(R.dimen.default_divider_size)
+    var dividerSize: Int = context.dpToPx(DEFAULT_DIVIDER_SIZE_DP)
+        set(value) {
+            field = value
+            updateView()
+        }
+    //endregion
 
     init {
         fetchAndroidAttrs(context, android.R.attr.background, set = attrs) {
+            //region Divider Color
             dividerColor = try {
                 getColor(0, DEFAULT_COLOR)
             } catch (e: Resources.NotFoundException) {
                 Log.e(TAG, "You should use valid color background resource for divider")
                 DEFAULT_COLOR
             }
+            //endregion
         }
 
         fetchAttrs(context, R.styleable.DividerView, set = attrs) {
-            dividerOrientation =
-                getInt(R.styleable.DividerView_dividerOrientation, DEFAULT_ORIENTATION)
+            //region Divider Orientation
+            dividerOrientation = getInt(
+                R.styleable.DividerView_dividerOrientation,
+                DEFAULT_ORIENTATION
+            )
+            //endregion
+
+            //region Divider Size
+            val sizeFromAttrs = getDimensionPixelSize(
+                R.styleable.DividerView_dividerSize,
+                context.dpToPx(DEFAULT_DIVIDER_SIZE_DP)
+            )
+            dividerSize = if (sizeFromAttrs > 0) {
+                sizeFromAttrs
+            } else {
+                context.dpToPx(DEFAULT_DIVIDER_SIZE_DP)
+            }
+            //endregion
         }
     }
 
@@ -67,6 +92,7 @@ class DividerView @JvmOverloads constructor(
         updateView()
     }
 
+    //region Measure Dimension functions
     private fun measureWidthDimension(widthMeasureSpec: Int): Int {
         val forceDividerWidth = dividerOrientation != Orientation.HORIZONTAL
         return measureDimension(widthMeasureSpec, forceDividerWidth)
@@ -85,11 +111,12 @@ class DividerView @JvmOverloads constructor(
             specSize
         } else {
             if (forceDividerSize) {
-                defaultSize
+                dividerSize
             } else {
                 specSize
             }
         }
     }
+    //endregion
 
 }

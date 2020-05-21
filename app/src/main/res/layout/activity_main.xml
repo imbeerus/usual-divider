@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        app:dividerOrientation="horizontal" />
+        app:dividerOrientation="horizontal"
+        app:dividerSize="0.5dp" />
 
 </LinearLayout>
