@@ -9,5 +9,5 @@ android.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
 deps.android = android
 
 def kotlin = [:]
-kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 deps.kotlin = kotlin
