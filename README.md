@@ -22,7 +22,7 @@ allprojects {
 ```
 ```
 dependencies {
-        implementation 'com.github.lndmflngs:usual-divider:1.1.3'
+        implementation 'com.github.lndmflngs:usual-divider:1.1.4'
 }
 ```
 

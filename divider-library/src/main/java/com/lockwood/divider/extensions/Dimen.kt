@@ -3,9 +3,12 @@ package com.lockwood.divider.extensions
 import android.content.Context
 import android.util.DisplayMetrics
 
-internal fun Context.dpToPx(dp: Number): Int {
-    val densityDpi = resources.displayMetrics.densityDpi.toFloat()
-    val densityScale = (densityDpi / DisplayMetrics.DENSITY_DEFAULT)
-    val dpValue = dp.toFloat()
-    return (dpValue * densityScale).toInt()
+private val Context.densityDpi
+    get() = resources.displayMetrics.densityDpi.toFloat()
+
+private val Context.densityScale
+    get() = densityDpi / DisplayMetrics.DENSITY_DEFAULT
+
+internal fun Context.dpToPx(dp: Number): Number {
+    return dp.toFloat() * densityScale
 }

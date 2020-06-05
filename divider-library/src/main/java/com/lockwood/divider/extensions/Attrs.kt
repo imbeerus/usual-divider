@@ -1,13 +1,12 @@
 package com.lockwood.divider.extensions
 
-import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
 
-internal inline fun fetchAttrs(
-    context: Context,
+internal inline fun View.fetchAttrs(
     attrs: IntArray,
     set: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = 0,
@@ -29,8 +28,7 @@ internal inline fun fetchAttrs(
     }
 }
 
-internal inline fun fetchAndroidAttrs(
-    context: Context,
+internal inline fun View.fetchAndroidAttrs(
     vararg attrs: Int,
     set: AttributeSet? = null,
     fetch: TypedArray .() -> Unit = {}
